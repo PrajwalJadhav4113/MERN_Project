@@ -1,11 +1,11 @@
 
   
-import mongoose from "mongoose";
-import { DB_NAME} from "./constants";
-import connectDB from "./db";
+// import mongoose from "mongoose";
+// import { DB_NAME} from "../constants.js";
+import connectDB from "./db/index.js";
 
 
-connectDB()
+connectDB();
 // its frist approch
 /*
 (async()=>{
