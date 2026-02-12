@@ -1,50 +1,49 @@
-
-  
-// import mongoose from "mongoose";
-// import { DB_NAME} from "../constants.js";
+// require('dotenv').config({path: './env'})
+import dotenv from "dotenv"
 import connectDB from "./db/index.js";
-import dotenv from "dotenv";
-import express from "express";
-const app = express()
-
-
+import {app} from './app.js'
 dotenv.config({
-    path: './env'
-})
-
-
-connectDB() //we need to write then and catch beacause its async await gives us promis 
-.then(()=>{
-    app.on("error",(error)=>{
-            console.log("ERROR:",error);
-            throw error
-        })   // They handle runtime express error
-
-   app.listen(process.env.PORT || 8001, ()=>{
-    console.log (`Server is running at port: ${process.env.PORT}`)
-   })
-})
-.catch((err)=>{
-    console.log("MONGO db connection failed !!!",err)
+    path: './.env'
 })
 
 
 
-// its frist approch
+connectDB()
+.then(() => {
+    app.listen(process.env.PORT || 8000, () => {
+        console.log(`⚙️ Server is running at port : ${process.env.PORT}`);
+    })
+})
+.catch((err) => {
+    console.log("MONGO db connection failed !!! ", err);
+})
+
+
+
+
+
+
+
+
+
+
 /*
-(async()=>{
+import express from "express"
+const app = express()
+( async () => {
     try {
-        await mongoose.connect(`${process.env.MONGODB_URL}/${DB_NAME}`)
-        app.on("error",(error)=>{
-            console.log("ERROR:",error);
+        await mongoose.connect(`${process.env.MONGODB_URI}/${DB_NAME}`)
+        app.on("errror", (error) => {
+            console.log("ERRR: ", error);
             throw error
         })
 
-        app.listen(process.env.PORT,()=>{
-            console.log(`App is listning on port ${process.env.PORT}`)
+        app.listen(process.env.PORT, () => {
+            console.log(`App is listening on port ${process.env.PORT}`);
         })
-    }catch(error){
-        console.error("ERROR:",error)
+
+    } catch (error) {
+        console.error("ERROR: ", error)
         throw err
     }
 })()
